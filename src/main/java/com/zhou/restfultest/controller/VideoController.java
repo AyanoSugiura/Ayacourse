@@ -43,7 +43,7 @@ public class VideoController {
         }
         Video video=new Video();
         try {
-            file.transferTo(new File("D://zhou1//project2//restfultest//src//main//resources//videoresources//"+file.getOriginalFilename()));
+            file.transferTo(new File("/home/ubuntu/Ayacourse/src/main/resources/videoresources/"+file.getOriginalFilename()));
             System.out.println(file.getOriginalFilename());
             video.setTitle("");
             video.setTitle((String) map.get("title"));
