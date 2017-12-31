@@ -5,10 +5,7 @@ import com.zhou.restfultest.model.User;
 import com.zhou.restfultest.model.Video;
 import com.zhou.restfultest.service.UserService;
 import com.zhou.restfultest.service.VideoService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -48,7 +45,7 @@ public class UserController {
         User user = userService.findByName(name);
         return user;
     }
-    @PostMapping("/findall")
+    @GetMapping("/findall")
     public List<User> findAll() {
         List<User> users = userService.findAll();
         return users;

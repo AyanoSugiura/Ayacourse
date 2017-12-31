@@ -84,7 +84,7 @@ public class VideoController {
         Video video = videoService.findByTitle(name);
         return video;
     }
-    @PostMapping("/findall")
+    @GetMapping("/findall")
     public List<Video> findAll() {
         List<Video> videos = videoService.findAll();
         return videos;
