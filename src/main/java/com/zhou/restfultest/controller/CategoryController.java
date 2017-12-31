@@ -15,6 +15,7 @@ public class CategoryController {
     @PostMapping("/save")
     public Category save(Category category) {
         categoryService.save(category);
+        System.out.println(category.getName());
         return category;
     }
     @PostMapping("/detailbyid")
