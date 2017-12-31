@@ -6,6 +6,7 @@ import com.zhou.restfultest.service.CategoryService;
 import com.zhou.restfultest.service.UserService;
 import com.zhou.restfultest.service.VideoService;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +33,8 @@ public class VideoController {
 
     @PostMapping("/save")
     public Video save(@RequestParam String data, @RequestParam("filename") MultipartFile file) {
+        data=URLDecoder.decode(data);
+        System.out.println(data);
         Map<String,Object> map= null;
         try {
             map = mapper.readValue(data,Map.class);
