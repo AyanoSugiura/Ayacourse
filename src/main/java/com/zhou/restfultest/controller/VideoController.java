@@ -51,7 +51,7 @@ public class VideoController {
                 video.setId((Integer) map.get("id"));
             video.setAuthor(userService.findById((Integer) map.get("uid")));
             video.setCategory(categoryService.findById((Integer) map.get("cid")));
-            video.setLink("http://localhost:8080/video/getfile/"+file.getOriginalFilename());
+            video.setLink("http://123.207.116.177:8080/video/getfile/"+file.getOriginalFilename());
             videoService.save(video);
         } catch (IOException e) {
             e.printStackTrace();
