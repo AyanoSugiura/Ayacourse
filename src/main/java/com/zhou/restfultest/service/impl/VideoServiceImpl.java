@@ -17,4 +17,8 @@ public class VideoServiceImpl extends ServiceImpl<Video,Integer> implements Vide
     public Video findByTitle(String title) {
         return videoRepository.findByTitle(title);
     }
+    @Override
+    public Integer  findMaxId() {
+        return videoRepository.findMaxId();
+    }
 }

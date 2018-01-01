@@ -43,15 +43,15 @@ public class VideoController {
         }
         Video video=new Video();
         try {
-            file.transferTo(new File("/home/ubuntu/Ayacourse/src/main/resources/videoresources/"+file.getOriginalFilename()));
-            System.out.println(file.getOriginalFilename());
-            video.setTitle("");
+            String saveFileName=videoService.findMaxId()+1+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+            file.transferTo(new File("/home/ubuntu/Ayacourse/src/main/resources/videoresources/"+saveFileName));
+            System.out.println(saveFileName);
             video.setTitle((String) map.get("title"));
             if((Integer) map.get("id")!=null)
                 video.setId((Integer) map.get("id"));
             video.setAuthor(userService.findById((Integer) map.get("uid")));
             video.setCategory(categoryService.findById((Integer) map.get("cid")));
-            video.setLink("http://123.207.116.177:8080/video/getfile/"+file.getOriginalFilename());
+            video.setLink("http://123.207.116.177:8080/video/getfile/"+saveFileName);
             videoService.save(video);
         } catch (IOException e) {
             e.printStackTrace();
@@ -88,5 +88,10 @@ public class VideoController {
     public List<Video> findAll() {
         List<Video> videos = videoService.findAll();
         return videos;
+    }
+    @GetMapping("/findmaxid")
+    public Integer maxId() {
+        Integer maxId = videoService.findMaxId();
+        return maxId;
     }
 }
