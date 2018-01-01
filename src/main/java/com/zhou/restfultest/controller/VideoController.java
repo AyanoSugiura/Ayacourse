@@ -58,8 +58,8 @@ public class VideoController {
         }
         return video;
     }
-    @GetMapping("/getfile")
-    public ResponseEntity getFile(@RequestParam String filename) {
+    @GetMapping("/getfile/{filename:.+}")
+    public ResponseEntity getFile(@PathVariable String filename) {
         System.out.println("文件名为"+filename);
         File file=new File("/home/ubuntu/Ayacourse/src/main/resources/videoresources/"+filename);
         HttpHeaders headers = new HttpHeaders();
