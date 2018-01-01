@@ -50,6 +50,20 @@ public class UserController {
         List<User> users = userService.findAll();
         return users;
     }
+
+    @PostMapping("/register")
+    public User register(User user) {
+        if (userService.findByName(user.getName())==null) {
+            userService.save(user);
+            System.out.println("找不到，创建");
+            return userService.findByName(user.getName());
+        }
+        else {
+            return  null;
+        }
+
+    }
+
     /*
 
     @PostMapping("/detail")
