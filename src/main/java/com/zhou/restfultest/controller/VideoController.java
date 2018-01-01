@@ -58,10 +58,10 @@ public class VideoController {
         }
         return video;
     }
-    @GetMapping("/getfile/{filename:.+}")
-    public ResponseEntity getFile(@PathVariable String filename) {
+    @GetMapping("/getfile")
+    public ResponseEntity getFile(@RequestParam String filename) {
         System.out.println("文件名为"+filename);
-        File file=new File("D://zhou1//project2//restfultest//src//main//resources//videoresources//"+filename);
+        File file=new File("/home/ubuntu/Ayacourse/src/main/resources/videoresources/"+filename);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
         headers.add("Content-Disposition", "attachment; filename=" + filename);
