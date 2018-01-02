@@ -1,6 +1,7 @@
 package com.zhou.restfultest.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zhou.restfultest.model.Category;
 import com.zhou.restfultest.model.Video;
 import com.zhou.restfultest.service.CategoryService;
 import com.zhou.restfultest.service.UserService;
@@ -90,6 +91,14 @@ public class VideoController {
         sort=new Sort(Sort.Direction.DESC,"id");
 
         List<Video> videos = videoService.findAll(sort);
+        return videos;
+    }
+
+    @PostMapping("/findallbycid")
+    public List<Video> findVideosByCategory(Category category) {
+        System.out.println(category.getName());
+        System.out.println(category.getId());
+        List<Video> videos = videoService.findVideosByCategory(category);
         return videos;
     }
     @GetMapping("/findmaxid")

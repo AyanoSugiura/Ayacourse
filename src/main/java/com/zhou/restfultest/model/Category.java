@@ -8,7 +8,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String name;
     @Column(columnDefinition = "INTEGER DEFAULT 1")
     private Integer usable=1;    //可用状态 1--可用 0--不可用
