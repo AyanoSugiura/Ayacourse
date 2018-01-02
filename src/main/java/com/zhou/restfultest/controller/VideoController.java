@@ -7,6 +7,7 @@ import com.zhou.restfultest.service.UserService;
 import com.zhou.restfultest.service.VideoService;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -85,8 +86,10 @@ public class VideoController {
         return video;
     }
     @GetMapping("/findall")
-    public List<Video> findAll() {
-        List<Video> videos = videoService.findAll();
+    public List<Video> findAll(Sort sort) {
+        sort=new Sort(Sort.Direction.DESC,"id");
+
+        List<Video> videos = videoService.findAll(sort);
         return videos;
     }
     @GetMapping("/findmaxid")

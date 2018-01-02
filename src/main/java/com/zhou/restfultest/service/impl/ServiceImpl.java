@@ -2,6 +2,8 @@ package com.zhou.restfultest.service.impl;
 
 import com.zhou.restfultest.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
 import java.io.Serializable;
@@ -10,7 +12,7 @@ import java.util.List;
 public class ServiceImpl<T,TD extends Serializable> implements Service<T,TD> {
 
     @Autowired
-    CrudRepository<T,Integer> myppRepository;
+    JpaRepository<T,Integer> myppRepository;
 
     @Override
     public void save(T model) {
@@ -28,6 +30,11 @@ public class ServiceImpl<T,TD extends Serializable> implements Service<T,TD> {
     @Override
     public List<T> findAll() {
       return (List<T>)myppRepository.findAll();
+    }
+
+    @Override
+    public List<T> findAll(Sort var1) {
+        return (List<T>)myppRepository.findAll( var1);
     }
    /* @Override
     public void save(List models) {

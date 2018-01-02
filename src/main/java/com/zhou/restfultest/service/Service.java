@@ -1,5 +1,7 @@
 package com.zhou.restfultest.service;
 
+import org.springframework.data.domain.Sort;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -9,4 +11,5 @@ public interface Service<T,TD extends Serializable> {
     void deleteById(Integer id);//通过主鍵刪除
     T findById(Integer id);//通过ID查找
     List<T> findAll();//获取所有
+    public List<T> findAll(Sort var1);
 }
