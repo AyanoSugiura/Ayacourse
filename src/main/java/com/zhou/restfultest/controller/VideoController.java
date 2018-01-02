@@ -45,7 +45,7 @@ public class VideoController {
         }
         Video video=new Video();
         try {
-            String saveFileName=/*videoService.findMaxId()*/+1+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+            String saveFileName=videoService.findMaxId()+1+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
             file.transferTo(new File("/home/ubuntu/Ayacourse/src/main/resources/videoresources/"+saveFileName));
             System.out.println(saveFileName);
             video.setTitle((String) map.get("title"));
