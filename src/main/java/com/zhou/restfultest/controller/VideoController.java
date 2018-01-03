@@ -31,39 +31,43 @@ public class VideoController {
     private UserService userService;
     @Resource
     private CategoryService categoryService;
-    private ObjectMapper mapper=new ObjectMapper();
+    private ObjectMapper mapper = new ObjectMapper();
 
     @PostMapping("/save")
     public Video save(@RequestParam String data, @RequestParam("filename") MultipartFile file) {
-        data=URLDecoder.decode(data);
+        data = URLDecoder.decode(data);
         System.out.println(data);
-        Map<String,Object> map= null;
+        Map<String, Object> map = null;
         try {
-            map = mapper.readValue(data,Map.class);
+            map = mapper.readValue(data, Map.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Video video=new Video();
+        Video video = new Video();
         try {
-            String saveFileName=videoService.findMaxId()+1+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-            file.transferTo(new File("/home/ubuntu/Ayacourse/src/main/resources/videoresources/"+saveFileName));
+            String saveFileName;
+            if (videoService.findMaxId() == null){
+                 saveFileName =  1 + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));}
+            else { saveFileName = videoService.findMaxId() + 1 + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));}
+            file.transferTo(new File("/home/ubuntu/Ayacourse/src/main/resources/videoresources/" + saveFileName));
             System.out.println(saveFileName);
             video.setTitle((String) map.get("title"));
-            if((Integer) map.get("id")!=null)
+            if ((Integer) map.get("id") != null)
                 video.setId((Integer) map.get("id"));
             video.setAuthor(userService.findById((Integer) map.get("uid")));
             video.setCategory(categoryService.findById((Integer) map.get("cid")));
-            video.setLink("http://123.207.116.177:8080/video/getfile/"+saveFileName);
+            video.setLink("http://123.207.116.177:8080/video/getfile/" + saveFileName);
             videoService.save(video);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return video;
     }
+
     @GetMapping("/getfile/{filename:.+}")
     public ResponseEntity getFile(@PathVariable String filename) {
-        System.out.println("文件名为"+filename);
-        File file=new File("/home/ubuntu/Ayacourse/src/main/resources/videoresources/"+filename);
+        System.out.println("文件名为" + filename);
+        File file = new File("/home/ubuntu/Ayacourse/src/main/resources/videoresources/" + filename);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
         headers.add("Content-Disposition", "attachment; filename=" + filename);
@@ -76,19 +80,22 @@ public class VideoController {
                 .contentType(MediaType.parseMediaType("application/octet-stream"))
                 .body(new FileSystemResource(file));
     }
+
     @PostMapping("/detailbyid")
     public Video detailById(@RequestParam Integer id) {
         Video video = videoService.findById(id);
         return video;
     }
+
     @PostMapping("/detailbyname")
     public Video detailByTitle(@RequestParam String name) {
         Video video = videoService.findByTitle(name);
         return video;
     }
+
     @GetMapping("/findall")
     public List<Video> findAll(Sort sort) {
-        sort=new Sort(Sort.Direction.DESC,"id");
+        sort = new Sort(Sort.Direction.DESC, "id");
 
         List<Video> videos = videoService.findAll(sort);
         return videos;
@@ -101,6 +108,7 @@ public class VideoController {
         List<Video> videos = videoService.findVideosByCategory(category);
         return videos;
     }
+
     @GetMapping("/findmaxid")
     public Integer maxId() {
         Integer maxId = videoService.findMaxId();
