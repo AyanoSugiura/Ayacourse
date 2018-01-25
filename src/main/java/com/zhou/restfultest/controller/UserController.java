@@ -45,6 +45,17 @@ public class UserController {
         User user = userService.findByName(name);
         return user;
     }
+
+    @PostMapping("/loginapi")
+    public User loginApi(@RequestParam String name,@RequestParam String password) {
+        User user = userService.findByName(name);
+        if (user.getPassword().equals(password)){
+            user.setPassword("");
+            return user;
+        }
+        else return user;
+    }
+
     @GetMapping("/findall")
     public List<User> findAll() {
         List<User> users = userService.findAll();
