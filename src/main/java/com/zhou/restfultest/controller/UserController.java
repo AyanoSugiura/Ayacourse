@@ -23,23 +23,27 @@ public class UserController {
         userService.save(user);
         return user;
     }
+
     @PostMapping("/save/favorite")
-    public User savefavorite(@RequestParam Integer uid,@RequestParam Integer vid) {
+    public User savefavorite(@RequestParam Integer uid, @RequestParam Integer vid) {
         User user = userService.findById(uid);
-        Video video=videoService.findById(vid);
+        Video video = videoService.findById(vid);
         user.getFavorites().add(video);
         userService.save(user);
         return user;
     }
+
     @PostMapping("/delete")
     public void delete(@RequestParam Integer id) {
         userService.deleteById(id);
     }
+
     @PostMapping("/detailbyid")
     public User detailById(@RequestParam Integer id) {
         User user = userService.findById(id);
         return user;
     }
+
     @PostMapping("/detailbyname")
     public User detailByName(@RequestParam String name) {
         User user = userService.findByName(name);
@@ -47,13 +51,12 @@ public class UserController {
     }
 
     @PostMapping("/loginapi")
-    public User loginApi(@RequestParam String name,@RequestParam String password) {
+    public User loginApi(@RequestParam String name, @RequestParam String password) {
         User user = userService.findByName(name);
-        if (user.getPassword().equals(password)){
+        if (user != null && user.getPassword().equals(password)) {
             user.setPassword("");
             return user;
-        }
-        else return user;
+        } else return null;
     }
 
     @GetMapping("/findall")
@@ -64,13 +67,12 @@ public class UserController {
 
     @PostMapping("/register")
     public User register(User user) {
-        if (userService.findByName(user.getName())==null) {
+        if (userService.findByName(user.getName()) == null) {
             userService.save(user);
             System.out.println("找不到，创建");
             return userService.findByName(user.getName());
-        }
-        else {
-            return  null;
+        } else {
+            return null;
         }
 
     }
