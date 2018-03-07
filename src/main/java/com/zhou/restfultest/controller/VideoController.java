@@ -73,11 +73,12 @@ public class VideoController {
         headers.add("Content-Disposition", "attachment; filename=" + filename);
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");
+        headers.add("Access-Control-Allow-Origin","*");
         return ResponseEntity
                 .ok()
                 .headers(headers)
                 .contentLength(file.length())
-                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                // .contentType(MediaType.parseMediaType("application/octet-stream"))
                 .body(new FileSystemResource(file));
     }
 
